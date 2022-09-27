@@ -1,0 +1,45 @@
+{
+	"name": "Send email on failure",
+	"properties": {
+		"activities": [
+			{
+				"name": "Send email on failure",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-04.centralus.logic.azure.com:443/workflows/f6a6a187651b44df92706005a738e348/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=3n6S7VbM-0pde4qAymjGGUceJq_xVrwDYNXH2ZFMDP8",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"value": "{“EmailTo”: “@{pipeline().parameters.EmailTo}”,\n”Subject”: “An error has occured in the @{pipeline().Pipeline}-pipeline”,\n”DataFactoryName”: “@{pipeline().DataFactory}”,\n”PipelineName”: “@{pipeline().Pipeline}”,\n”Activity”: “@{pipeline().parameters.Activity}”,\n”ErrorMessage”: “@{pipeline().parameters.ErrorMessage}”}",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"EmailTo": {
+				"type": "string"
+			},
+			"Activity": {
+				"type": "string"
+			},
+			"ErrorMessage": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-09-27T10:53:19Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
