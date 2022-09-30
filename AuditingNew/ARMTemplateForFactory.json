@@ -189,7 +189,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_UpdateErrorTable]",
+							"storedProcedureName": "[dbo].[sp_UpdateErrorTabl",
 							"storedProcedureParameters": {
 								"CopyActivity_End_Time": {
 									"value": {
