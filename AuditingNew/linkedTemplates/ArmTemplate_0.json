@@ -1,0 +1,432 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "AuditingNew"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MockData_Sink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "MOCK_DATA_Sink"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MockData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "first_name",
+						"type": "varchar"
+					},
+					{
+						"name": "last_name",
+						"type": "varchar"
+					},
+					{
+						"name": "email",
+						"type": "varchar"
+					},
+					{
+						"name": "gender",
+						"type": "varchar"
+					},
+					{
+						"name": "address",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "MOCK_DATA"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Mock_data",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "MockData",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "MockData_Sink",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Success",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Mock_data",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_UpdateLogTable]",
+							"storedProcedureParameters": {
+								"CopyActivity_End_Time": {
+									"value": {
+										"value": "@{activity('Mock_data').output.executionDetails[0].start}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"CopyActivity_Start_Time": {
+									"value": {
+										"value": "@{utcNow()}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"DataFactory_Name": {
+									"value": {
+										"value": "@{pipeline().DataFactory}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"DataRead": {
+									"value": {
+										"value": "@{activity('Mock_data').output.rowsRead}",
+										"type": "Expression"
+									},
+									"type": "Int32"
+								},
+								"Destination": {
+									"value": {
+										"value": "'pipeline_Success'",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"Execution_Status": {
+									"value": {
+										"value": "@{activity('Mock_data').output.executionDetails[0].status}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"Pipeline_Name": {
+									"value": {
+										"value": "@{pipeline().Pipeline}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"rowsCopied": {
+									"value": {
+										"value": "@{activity('Mock_data').output.rowsCopied}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"RunID": {
+									"value": {
+										"value": "@{pipeline().RunId}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"Source": {
+									"value": {
+										"value": "'Mock_data'",
+										"type": "Expression"
+									},
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase1",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Failure",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Mock_data",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_UpdateErrorTable]",
+							"storedProcedureParameters": {
+								"CopyActivity_End_Time": {
+									"value": {
+										"value": "@{activity('Mock_data').output.executionDetails[0].start}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"CopyActivity_Start_Time": {
+									"value": {
+										"value": "@{utcNow()}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"DataFactory_Name": {
+									"value": {
+										"value": "@{pipeline().DataFactory}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"DataRead": {
+									"value": {
+										"value": "@{activity('Mock_data').output.rowsRead}",
+										"type": "Expression"
+									},
+									"type": "Int32"
+								},
+								"Destination": {
+									"value": {
+										"value": "'pipeline_Failure'",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"ErrorCode": {
+									"value": {
+										"value": "@{activity('Mock_data').error.errorCode}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"ErrorDescription": {
+									"value": {
+										"value": "@{activity('Mock_data').error.message}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"ErrorLoggedTime": {
+									"value": {
+										"value": "@utcNow()",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"Execution_Status": {
+									"value": {
+										"value": "@{activity('Mock_data').output.executionDetails[0].status}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"Pipeline_Name": {
+									"value": {
+										"value": "@{pipeline().Pipeline}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"rowsCopied": {
+									"value": {
+										"value": "@{activity('Mock_data').output.rowsCopied}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"RunId": {
+									"value": {
+										"value": "@{pipeline().RunId}",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"Source": {
+									"value": {
+										"value": "'Mock_data'",
+										"type": "Expression"
+									},
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase1",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Failure",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "https://prod-16.centralus.logic.azure.com:443/workflows/e52bcc90257b43e68b69abcdc048f812/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=tan2p5j69PiDtYpaD_K5vIoyp3nhWHilYBKgEbm50dw",
+								"type": "Expression"
+							},
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json "
+							},
+							"body": {
+								"value": "{\n\"EmailTo\": \"@{pipeline().parameters.EmailTo}\",\n\"Subject\": \"An Error has occured in the @{pipeline().Pipeline}-pipeline\",\n\"DataFactoryName\": \"@{pipeline().DataFactory}\",\n\"PipelineName\": \"@{pipeline().Pipeline}\",\n\"Activity\": \"@{pipeline().parameters.Activity}\",\n\"ErrorMessage\":\"@{pipeline().parameters.ErrorMessage}\"\n}",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"EmailTo": {
+						"type": "string"
+					},
+					"Activity": {
+						"type": "string"
+					},
+					"ErrorMessage": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MockData')]",
+				"[concat(variables('factoryId'), '/datasets/MockData_Sink')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		}
+	]
+}
