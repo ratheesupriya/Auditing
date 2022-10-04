@@ -14,6 +14,18 @@
 		"AzureSqlDatabaseLinkedServer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseLinkedServer'"
+		},
+		"Auditing_trigger_properties_pipeline1_parameters_EmailTo": {
+			"type": "string",
+			"defaultValue": "amitsaini3331@gmail.com"
+		},
+		"Auditing_trigger_properties_pipeline1_parameters_Activity": {
+			"type": "string",
+			"defaultValue": "Failure"
+		},
+		"Auditing_trigger_properties_pipeline1_parameters_ErrorMessage": {
+			"type": "string",
+			"defaultValue": "@{activity('Failure').Error.Message}"
 		}
 	},
 	"variables": {
@@ -61,7 +73,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "MockData",
+								"referenceName": "Mock_data",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -105,7 +117,7 @@
 								},
 								"CopyActivity_Start_Time": {
 									"value": {
-										"value": "@{utcnow()}",
+										"value": "@{utcNow()}",
 										"type": "Expression"
 									},
 									"type": "String"
@@ -395,13 +407,13 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/MockData')]",
+				"[concat(variables('factoryId'), '/datasets/Mock_data')]",
 				"[concat(variables('factoryId'), '/datasets/MockData_Sink')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabaseLinkedServer')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/MockData')]",
+			"name": "[concat(parameters('factoryName'), '/Mock_data')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -493,6 +505,40 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Auditing_trigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pipeline1",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"EmailTo": "[parameters('Auditing_trigger_properties_pipeline1_parameters_EmailTo')]",
+							"Activity": "[parameters('Auditing_trigger_properties_pipeline1_parameters_Activity')]",
+							"ErrorMessage": "[parameters('Auditing_trigger_properties_pipeline1_parameters_ErrorMessage')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 2,
+						"startTime": "2022-10-04T12:10:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
+			]
 		}
 	]
 }

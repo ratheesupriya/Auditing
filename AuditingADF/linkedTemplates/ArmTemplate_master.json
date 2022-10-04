@@ -15,6 +15,18 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseLinkedServer'"
 		},
+		"Auditing_trigger_properties_pipeline1_parameters_EmailTo": {
+			"type": "string",
+			"defaultValue": "amitsaini3331@gmail.com"
+		},
+		"Auditing_trigger_properties_pipeline1_parameters_Activity": {
+			"type": "string",
+			"defaultValue": "Failure"
+		},
+		"Auditing_trigger_properties_pipeline1_parameters_ErrorMessage": {
+			"type": "string",
+			"defaultValue": "@{activity('Failure').Error.Message}"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -47,6 +59,15 @@
 					},
 					"AzureSqlDatabaseLinkedServer_connectionString": {
 						"value": "[parameters('AzureSqlDatabaseLinkedServer_connectionString')]"
+					},
+					"Auditing_trigger_properties_pipeline1_parameters_EmailTo": {
+						"value": "[parameters('Auditing_trigger_properties_pipeline1_parameters_EmailTo')]"
+					},
+					"Auditing_trigger_properties_pipeline1_parameters_Activity": {
+						"value": "[parameters('Auditing_trigger_properties_pipeline1_parameters_Activity')]"
+					},
+					"Auditing_trigger_properties_pipeline1_parameters_ErrorMessage": {
+						"value": "[parameters('Auditing_trigger_properties_pipeline1_parameters_ErrorMessage')]"
 					}
 				}
 			},
