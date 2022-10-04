@@ -1,0 +1,17 @@
+{
+	"name": "MockData_Sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseLinkedServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "MOCK_DATA_Sink"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
