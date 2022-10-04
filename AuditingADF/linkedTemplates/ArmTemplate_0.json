@@ -333,13 +333,6 @@
 									},
 									"type": "String"
 								},
-								"ErrorMessage": {
-									"value": {
-										"value": "@{activity('Mock_data').error.message}",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
 								"ErrorLoggedTime": {
 									"value": {
 										"value": "@utcNow()",
@@ -347,16 +340,16 @@
 									},
 									"type": "String"
 								},
-								"Execution_Status": {
+								"ErrorMessage": {
 									"value": {
-										"value": "@{activity('Mock_data').output.executionDetails[0].status}",
+										"value": "@{activity('Mock_data').error.message}",
 										"type": "Expression"
 									},
 									"type": "String"
 								},
-								"FailureType": {
+								"Execution_Status": {
 									"value": {
-										"value": "@concat(activity('Mock_data').error.message,'failureType:',activity('Mock_data').error.failureType)",
+										"value": "@{activity('Mock_data').output.executionDetails[0].status}",
 										"type": "Expression"
 									},
 									"type": "String"
@@ -391,7 +384,7 @@
 								},
 								"Source_Type": {
 									"value": {
-										"value": "@{activity('Mock_data').output.executionDetails[0].source.type}\n",
+										"value": "@{activity('Mock_data').output.executionDetails[0].source.type}",
 										"type": "Expression"
 									},
 									"type": "String"
