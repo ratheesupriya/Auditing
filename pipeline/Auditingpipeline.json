@@ -218,16 +218,16 @@
 							},
 							"type": "String"
 						},
-						"ErrorMessage": {
+						"ErrorLoggedTime": {
 							"value": {
-								"value": "@{activity('Mock_data').error.message}",
+								"value": "@utcNow()",
 								"type": "Expression"
 							},
 							"type": "String"
 						},
-						"ErrorLoggedTime": {
+						"ErrorMessage": {
 							"value": {
-								"value": "@utcNow()",
+								"value": "@{activity('Mock_data').error.message}",
 								"type": "Expression"
 							},
 							"type": "String"
@@ -269,7 +269,7 @@
 						},
 						"Source_Type": {
 							"value": {
-								"value": "@{activity('Mock_data').output.executionDetails[0].source.type}\n",
+								"value": "@{activity('Mock_data').output.executionDetails[0].source.type}",
 								"type": "Expression"
 							},
 							"type": "String"
