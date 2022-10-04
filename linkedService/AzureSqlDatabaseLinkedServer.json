@@ -1,0 +1,12 @@
+{
+	"name": "AzureSqlDatabaseLinkedServer",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=auditingserver1.database.windows.net;initial catalog=Auditing;user id=adminuser",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDA5ODg4MUEzLTY4NzAtNDQzOS1CODM1LTNEOUI1RTcyM0JGQV8yNTk0M2Q0MS04Nzc0LTRjN2EtOWY0NC1jNmJmNThiOWFlODgiDQp9"
+		}
+	}
+}
