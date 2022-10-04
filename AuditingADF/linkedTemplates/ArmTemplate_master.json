@@ -7,23 +7,19 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "AuditingADF"
 		},
-		"AzureSqlDatabase1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
-		},
 		"AzureSqlDatabaseLinkedServer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseLinkedServer'"
 		},
-		"Auditing_trigger_properties_pipeline1_parameters_EmailTo": {
+		"Auditing_trigger_properties_Auditingpipeline_parameters_EmailTo": {
 			"type": "string",
 			"defaultValue": "amitsaini3331@gmail.com"
 		},
-		"Auditing_trigger_properties_pipeline1_parameters_Activity": {
+		"Auditing_trigger_properties_Auditingpipeline_parameters_Activity": {
 			"type": "string",
 			"defaultValue": "Failure"
 		},
-		"Auditing_trigger_properties_pipeline1_parameters_ErrorMessage": {
+		"Auditing_trigger_properties_Auditingpipeline_parameters_ErrorMessage": {
 			"type": "string",
 			"defaultValue": "@{activity('Failure').Error.Message}"
 		},
@@ -54,20 +50,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"AzureSqlDatabase1_connectionString": {
-						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
-					},
 					"AzureSqlDatabaseLinkedServer_connectionString": {
 						"value": "[parameters('AzureSqlDatabaseLinkedServer_connectionString')]"
 					},
-					"Auditing_trigger_properties_pipeline1_parameters_EmailTo": {
-						"value": "[parameters('Auditing_trigger_properties_pipeline1_parameters_EmailTo')]"
+					"Auditing_trigger_properties_Auditingpipeline_parameters_EmailTo": {
+						"value": "[parameters('Auditing_trigger_properties_Auditingpipeline_parameters_EmailTo')]"
 					},
-					"Auditing_trigger_properties_pipeline1_parameters_Activity": {
-						"value": "[parameters('Auditing_trigger_properties_pipeline1_parameters_Activity')]"
+					"Auditing_trigger_properties_Auditingpipeline_parameters_Activity": {
+						"value": "[parameters('Auditing_trigger_properties_Auditingpipeline_parameters_Activity')]"
 					},
-					"Auditing_trigger_properties_pipeline1_parameters_ErrorMessage": {
-						"value": "[parameters('Auditing_trigger_properties_pipeline1_parameters_ErrorMessage')]"
+					"Auditing_trigger_properties_Auditingpipeline_parameters_ErrorMessage": {
+						"value": "[parameters('Auditing_trigger_properties_Auditingpipeline_parameters_ErrorMessage')]"
 					}
 				}
 			},

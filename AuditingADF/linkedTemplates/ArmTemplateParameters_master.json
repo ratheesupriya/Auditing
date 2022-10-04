@@ -5,19 +5,16 @@
 		"factoryName": {
 			"value": "AuditingADF"
 		},
-		"AzureSqlDatabase1_connectionString": {
-			"value": ""
-		},
 		"AzureSqlDatabaseLinkedServer_connectionString": {
 			"value": ""
 		},
-		"Auditing_trigger_properties_pipeline1_parameters_EmailTo": {
+		"Auditing_trigger_properties_Auditingpipeline_parameters_EmailTo": {
 			"value": "amitsaini3331@gmail.com"
 		},
-		"Auditing_trigger_properties_pipeline1_parameters_Activity": {
+		"Auditing_trigger_properties_Auditingpipeline_parameters_Activity": {
 			"value": "Failure"
 		},
-		"Auditing_trigger_properties_pipeline1_parameters_ErrorMessage": {
+		"Auditing_trigger_properties_Auditingpipeline_parameters_ErrorMessage": {
 			"value": "@{activity('Failure').Error.Message}"
 		},
 		"containerUri": {
