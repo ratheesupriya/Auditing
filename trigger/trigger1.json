@@ -21,9 +21,9 @@
 			"recurrence": {
 				"frequency": "Minute",
 				"interval": 2,
-				"startTime": "2022-10-04T15:30:00Z",
-				"endTime": "2022-10-04T15:35:00Z",
-				"timeZone": "UTC"
+				"startTime": "2022-10-04T16:22:00",
+				"endTime": "2022-10-04T16:24:00",
+				"timeZone": "India Standard Time"
 			}
 		}
 	}
