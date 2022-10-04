@@ -1,9 +1,0 @@
-{
-	"name": "AuditingADF",
-	"location": "eastus",
-	"identity": {
-		"type": "SystemAssigned",
-		"principalId": "a8975aac-c669-4038-af94-4407b1c57872",
-		"tenantId": "90d12e33-ad5e-4e82-8b5e-82bff0658ae0"
-	}
-}
