@@ -79,7 +79,7 @@
 						},
 						"CopyActivity_Start_Time": {
 							"value": {
-								"value": "@{utcnow()}",
+								"value": "@{utcNow()}",
 								"type": "Expression"
 							},
 							"type": "String"
