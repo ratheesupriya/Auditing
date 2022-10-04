@@ -239,13 +239,6 @@
 							},
 							"type": "String"
 						},
-						"FailureType": {
-							"value": {
-								"value": "@concat(activity('Mock_data').error.message,'failureType:',activity('Mock_data').error.failureType)",
-								"type": "Expression"
-							},
-							"type": "String"
-						},
 						"Pipeline_Name": {
 							"value": {
 								"value": "@{pipeline().Pipeline}",
