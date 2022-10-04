@@ -278,7 +278,7 @@
 								},
 								"TriggerType": {
 									"value": {
-										"value": "@concat(activity('Mock_data').error.message,'failureType:',activity('Mock_data').error.failureType)",
+										"value": "@{pipeline().TriggerType}",
 										"type": "Expression"
 									},
 									"type": "String"
