@@ -253,23 +253,9 @@
 							},
 							"type": "String"
 						},
-						"Sink_Type": {
-							"value": {
-								"value": "@{activity('Mock_data').output.executionDetails[0].sink.type}",
-								"type": "Expression"
-							},
-							"type": "String"
-						},
 						"Source": {
 							"value": {
 								"value": "'Mock_data'",
-								"type": "Expression"
-							},
-							"type": "String"
-						},
-						"Source_Type": {
-							"value": {
-								"value": "@{activity('Mock_data').output.executionDetails[0].source.type}",
 								"type": "Expression"
 							},
 							"type": "String"
