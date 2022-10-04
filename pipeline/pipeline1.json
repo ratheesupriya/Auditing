@@ -37,7 +37,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "MockData",
+						"referenceName": "Mock_data",
 						"type": "DatasetReference"
 					}
 				],
