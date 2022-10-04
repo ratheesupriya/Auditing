@@ -1,0 +1,29 @@
+{
+	"name": "Auditing_trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pipeline1",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"EmailTo": "amitsaini3331@gmail.com",
+					"Activity": "Failure",
+					"ErrorMessage": "@{activity('Failure').Error.Message}"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 2,
+				"startTime": "2022-10-04T12:10:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
