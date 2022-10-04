@@ -68,7 +68,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_UpdateLogTable]",
 					"storedProcedureParameters": {
 						"CopyActivity_End_Time": {
 							"value": {
@@ -143,7 +142,7 @@
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
+					"referenceName": "AzureSqlDatabaseLinkedServer",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -167,7 +166,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_UpdateErrorTable]",
 					"storedProcedureParameters": {
 						"CopyActivity_End_Time": {
 							"value": {
@@ -263,7 +261,7 @@
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
+					"referenceName": "AzureSqlDatabaseLinkedServer",
 					"type": "LinkedServiceReference"
 				}
 			},
@@ -288,7 +286,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": {
-						"value": "https://prod-16.centralus.logic.azure.com:443/workflows/e52bcc90257b43e68b69abcdc048f812/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=tan2p5j69PiDtYpaD_K5vIoyp3nhWHilYBKgEbm50dw",
+						"value": "https://prod-29.centralus.logic.azure.com:443/workflows/f984a918984e4e188e3514f0bd5197c9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pOJaXzLzRZxukISk8Gpa_dMhPWNb3HKHN8N5q4b02bk",
 						"type": "Expression"
 					},
 					"method": "POST",
