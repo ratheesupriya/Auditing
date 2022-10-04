@@ -1,9 +1,0 @@
-{
-	"name": "AuditingNew",
-	"location": "eastus",
-	"identity": {
-		"type": "SystemAssigned",
-		"principalId": "289af81e-99c2-4103-847c-eb97362acd98",
-		"tenantId": "90d12e33-ad5e-4e82-8b5e-82bff0658ae0"
-	}
-}
