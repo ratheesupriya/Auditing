@@ -22,6 +22,18 @@
 		"Auditing_trigger_properties_Auditingpipeline_parameters_ErrorMessage": {
 			"type": "string",
 			"defaultValue": "@{activity('Failure').Error.Message}"
+		},
+		"trigger1_properties_Auditingpipeline_parameters_EmailTo": {
+			"type": "string",
+			"defaultValue": "amitsaini3331@gmail.com"
+		},
+		"trigger1_properties_Auditingpipeline_parameters_Activity": {
+			"type": "string",
+			"defaultValue": "Failure"
+		},
+		"trigger1_properties_Auditingpipeline_parameters_ErrorMessage": {
+			"type": "string",
+			"defaultValue": "@{activity('Failure').Error.Message}"
 		}
 	},
 	"variables": {
@@ -494,6 +506,41 @@
 						"frequency": "Minute",
 						"interval": 2,
 						"startTime": "2022-10-04T12:44:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Auditingpipeline')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Auditingpipeline",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"EmailTo": "[parameters('trigger1_properties_Auditingpipeline_parameters_EmailTo')]",
+							"Activity": "[parameters('trigger1_properties_Auditingpipeline_parameters_Activity')]",
+							"ErrorMessage": "[parameters('trigger1_properties_Auditingpipeline_parameters_ErrorMessage')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 2,
+						"startTime": "2022-10-04T15:30:00Z",
+						"endTime": "2022-10-04T15:35:00Z",
 						"timeZone": "UTC"
 					}
 				}

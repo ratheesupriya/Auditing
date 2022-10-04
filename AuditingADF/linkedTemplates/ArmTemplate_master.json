@@ -23,6 +23,18 @@
 			"type": "string",
 			"defaultValue": "@{activity('Failure').Error.Message}"
 		},
+		"trigger1_properties_Auditingpipeline_parameters_EmailTo": {
+			"type": "string",
+			"defaultValue": "amitsaini3331@gmail.com"
+		},
+		"trigger1_properties_Auditingpipeline_parameters_Activity": {
+			"type": "string",
+			"defaultValue": "Failure"
+		},
+		"trigger1_properties_Auditingpipeline_parameters_ErrorMessage": {
+			"type": "string",
+			"defaultValue": "@{activity('Failure').Error.Message}"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -61,6 +73,15 @@
 					},
 					"Auditing_trigger_properties_Auditingpipeline_parameters_ErrorMessage": {
 						"value": "[parameters('Auditing_trigger_properties_Auditingpipeline_parameters_ErrorMessage')]"
+					},
+					"trigger1_properties_Auditingpipeline_parameters_EmailTo": {
+						"value": "[parameters('trigger1_properties_Auditingpipeline_parameters_EmailTo')]"
+					},
+					"trigger1_properties_Auditingpipeline_parameters_Activity": {
+						"value": "[parameters('trigger1_properties_Auditingpipeline_parameters_Activity')]"
+					},
+					"trigger1_properties_Auditingpipeline_parameters_ErrorMessage": {
+						"value": "[parameters('trigger1_properties_Auditingpipeline_parameters_ErrorMessage')]"
 					}
 				}
 			},

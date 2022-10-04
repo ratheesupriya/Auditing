@@ -17,6 +17,15 @@
 		"Auditing_trigger_properties_Auditingpipeline_parameters_ErrorMessage": {
 			"value": "@{activity('Failure').Error.Message}"
 		},
+		"trigger1_properties_Auditingpipeline_parameters_EmailTo": {
+			"value": "amitsaini3331@gmail.com"
+		},
+		"trigger1_properties_Auditingpipeline_parameters_Activity": {
+			"value": "Failure"
+		},
+		"trigger1_properties_Auditingpipeline_parameters_ErrorMessage": {
+			"value": "@{activity('Failure').Error.Message}"
+		},
 		"containerUri": {
 			"value": ""
 		},
