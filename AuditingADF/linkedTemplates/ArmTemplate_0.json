@@ -333,7 +333,7 @@
 									},
 									"type": "String"
 								},
-								"ErrorDescription": {
+								"ErrorMessage": {
 									"value": {
 										"value": "@{activity('Mock_data').error.message}",
 										"type": "Expression"
