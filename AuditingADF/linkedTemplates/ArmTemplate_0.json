@@ -514,7 +514,7 @@
 					"recurrence": {
 						"frequency": "Minute",
 						"interval": 2,
-						"startTime": "2022-10-04T12:10:00Z",
+						"startTime": "2022-10-04T12:44:00Z",
 						"timeZone": "UTC"
 					}
 				}
