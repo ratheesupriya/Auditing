@@ -316,7 +316,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": {
-						"value": "https://prod-72.eastus.logic.azure.com:443/workflows/7da4a85c71254c6cb3e58b7164c737e8/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=NDYuG9Sl7YG5BVZrWn_Oc8KnKwjD4e9fDLrr6-LI9v0",
+						"value": "https://prod-29.centralus.logic.azure.com:443/workflows/f984a918984e4e188e3514f0bd5197c9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pOJaXzLzRZxukISk8Gpa_dMhPWNb3HKHN8N5q4b02bk",
 						"type": "Expression"
 					},
 					"method": "POST",
