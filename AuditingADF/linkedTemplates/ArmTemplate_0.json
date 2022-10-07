@@ -10,30 +10,6 @@
 		"AzureSqlDatabaseLinkedServer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseLinkedServer'"
-		},
-		"Auditing_trigger_properties_Auditingpipeline_parameters_EmailTo": {
-			"type": "string",
-			"defaultValue": "amitsaini3331@gmail.com"
-		},
-		"Auditing_trigger_properties_Auditingpipeline_parameters_Activity": {
-			"type": "string",
-			"defaultValue": "Failure"
-		},
-		"Auditing_trigger_properties_Auditingpipeline_parameters_ErrorMessage": {
-			"type": "string",
-			"defaultValue": "@{activity('Failure').Error.Message}"
-		},
-		"trigger1_properties_Auditingpipeline_parameters_EmailTo": {
-			"type": "string",
-			"defaultValue": "amitsaini3331@gmail.com"
-		},
-		"trigger1_properties_Auditingpipeline_parameters_Activity": {
-			"type": "string",
-			"defaultValue": "Failure"
-		},
-		"trigger1_properties_Auditingpipeline_parameters_ErrorMessage": {
-			"type": "string",
-			"defaultValue": "@{activity('Failure').Error.Message}"
 		}
 	},
 	"variables": {
@@ -119,6 +95,159 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabaseLinkedServer')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/send_email_onailure')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabaseLinkedServer",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "DataFactory_Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Pipeline_Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "RunId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Source",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Destination",
+						"type": "nvarchar"
+					},
+					{
+						"name": "rowsCopied",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DataRead",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Execution_Status",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ErrorMessage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ErrorCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ErrorLoggedTime",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CopyActivity_Start_Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CopyActivity_End_Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TriggerType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TriggerId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TriggerName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TriggerTime",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "pipeline_Failure"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabaseLinkedServer')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Send Email on Failure')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Send Email On Failure",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "https://prod-29.centralus.logic.azure.com:443/workflows/f984a918984e4e188e3514f0bd5197c9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pOJaXzLzRZxukISk8Gpa_dMhPWNb3HKHN8N5q4b02bk",
+								"type": "Expression"
+							},
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json "
+							},
+							"body": {
+								"value": "{\n\"EmailTo\": \"@{pipeline().parameters.EmailTo}\",\n\"Subject\": \"An Error has occured in the @{pipeline().Pipeline}-pipeline\",\n\"DataFactoryName\": \"@{pipeline().DataFactory}\",\n\"PipelineName\": \"@{pipeline().Pipeline}\",\n\"Activity\": \"@{pipeline().parameters.Activity}\",\n\"ErrorMessage\":\"@{pipeline().parameters.ErrorMessage}\"\n}",
+								"type": "Expression"
+							},
+							"datasets": [
+								{
+									"referenceName": "Mock_data",
+									"type": "DatasetReference",
+									"parameters": {}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"EmailTo": {
+						"type": "string"
+					},
+					"Activity": {
+						"type": "string"
+					},
+					"ErrorMessage": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Mock_data')]"
 			]
 		},
 		{
@@ -424,8 +553,8 @@
 						}
 					},
 					{
-						"name": "Web1",
-						"type": "WebActivity",
+						"name": "Execute Pipeline",
+						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
 								"activity": "Failure",
@@ -434,27 +563,14 @@
 								]
 							}
 						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": {
-								"value": "https://prod-29.centralus.logic.azure.com:443/workflows/f984a918984e4e188e3514f0bd5197c9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pOJaXzLzRZxukISk8Gpa_dMhPWNb3HKHN8N5q4b02bk",
-								"type": "Expression"
+							"pipeline": {
+								"referenceName": "Send Email on Failure",
+								"type": "PipelineReference"
 							},
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/json "
-							},
-							"body": {
-								"value": "{\n\"EmailTo\": \"@{pipeline().parameters.EmailTo}\",\n\"Subject\": \"An Error has occured in the @{pipeline().Pipeline}-pipeline\",\n\"DataFactoryName\": \"@{pipeline().DataFactory}\",\n\"PipelineName\": \"@{pipeline().Pipeline}\",\n\"Activity\": \"@{pipeline().parameters.Activity}\",\n\"ErrorMessage\":\"@{pipeline().parameters.ErrorMessage}\"\n}",
-								"type": "Expression"
-							}
+							"waitOnCompletion": true,
+							"parameters": {}
 						}
 					}
 				],
@@ -463,7 +579,7 @@
 					"cancelAfter": {}
 				},
 				"parameters": {
-					"EmailTo": {
+					"EmailTo ": {
 						"type": "string"
 					},
 					"Activity": {
@@ -478,7 +594,8 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Mock_data')]",
 				"[concat(variables('factoryId'), '/datasets/MockData_Sink')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabaseLinkedServer')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabaseLinkedServer')]",
+				"[concat(variables('factoryId'), '/pipelines/Send Email on Failure')]"
 			]
 		},
 		{
@@ -494,11 +611,7 @@
 							"referenceName": "Auditingpipeline",
 							"type": "PipelineReference"
 						},
-						"parameters": {
-							"EmailTo": "[parameters('Auditing_trigger_properties_Auditingpipeline_parameters_EmailTo')]",
-							"Activity": "[parameters('Auditing_trigger_properties_Auditingpipeline_parameters_Activity')]",
-							"ErrorMessage": "[parameters('Auditing_trigger_properties_Auditingpipeline_parameters_ErrorMessage')]"
-						}
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -528,11 +641,7 @@
 							"referenceName": "Auditingpipeline",
 							"type": "PipelineReference"
 						},
-						"parameters": {
-							"EmailTo": "[parameters('trigger1_properties_Auditingpipeline_parameters_EmailTo')]",
-							"Activity": "[parameters('trigger1_properties_Auditingpipeline_parameters_Activity')]",
-							"ErrorMessage": "[parameters('trigger1_properties_Auditingpipeline_parameters_ErrorMessage')]"
-						}
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
