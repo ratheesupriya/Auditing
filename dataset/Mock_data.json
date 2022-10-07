@@ -36,7 +36,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "MOCK_DATA1"
+			"table": "MOCK_DATA"
 		}
 	}
 }
