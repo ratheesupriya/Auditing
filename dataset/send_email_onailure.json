@@ -1,0 +1,86 @@
+{
+	"name": "send_email_onailure",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseLinkedServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "DataFactory_Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Pipeline_Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RunId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Source",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Destination",
+				"type": "nvarchar"
+			},
+			{
+				"name": "rowsCopied",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DataRead",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Execution_Status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ErrorMessage",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ErrorCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ErrorLoggedTime",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CopyActivity_Start_Time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CopyActivity_End_Time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TriggerType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TriggerId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TriggerName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TriggerTime",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "pipeline_Failure"
+		}
+	}
+}
