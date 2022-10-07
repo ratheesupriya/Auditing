@@ -228,7 +228,7 @@
 						},
 						"ErrorMessage": {
 							"value": {
-								"value": "@{activity('Mock_data').error.message}",
+								"value": "@{activity('Mock_data').Error.Message}",
 								"type": "Expression"
 							},
 							"type": "String"
