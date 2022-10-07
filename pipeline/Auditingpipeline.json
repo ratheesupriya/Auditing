@@ -301,9 +301,9 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "Failure",
+						"activity": "Mock_data",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
