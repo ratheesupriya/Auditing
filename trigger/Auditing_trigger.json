@@ -8,11 +8,6 @@
 				"pipelineReference": {
 					"referenceName": "Auditingpipeline",
 					"type": "PipelineReference"
-				},
-				"parameters": {
-					"EmailTo": "amitsaini3331@gmail.com",
-					"Activity": "Failure",
-					"ErrorMessage": "@{activity('Failure').Error.Message}"
 				}
 			}
 		],

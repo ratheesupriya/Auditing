@@ -337,17 +337,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"EmailTo ": {
-				"type": "string"
-			},
-			"Activity": {
-				"type": "string"
-			},
-			"ErrorMessage": {
-				"type": "string"
-			}
-		},
 		"annotations": []
 	}
 }
