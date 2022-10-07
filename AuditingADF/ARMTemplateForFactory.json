@@ -461,7 +461,7 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "MOCK_DATA"
+					"table": "MOCK_DATA1"
 				}
 			},
 			"dependsOn": [
