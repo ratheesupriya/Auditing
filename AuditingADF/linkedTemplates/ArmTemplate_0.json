@@ -114,7 +114,7 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "MOCK_DATA1"
+					"table": "MOCK_DATA"
 				}
 			},
 			"dependsOn": [
@@ -151,7 +151,7 @@
 								"sqlWriterUseTableLock": false
 							},
 							"enableStaging": false,
-							"enableSkipIncompatibleRow": true,
+							"enableSkipIncompatibleRow": false,
 							"translator": {
 								"type": "TabularTranslator",
 								"typeConversion": true,
@@ -355,7 +355,7 @@
 								},
 								"ErrorMessage": {
 									"value": {
-										"value": "@{activity('Mock_data').error.message}",
+										"value": "@{activity('Mock_data').Error.Message}",
 										"type": "Expression"
 									},
 									"type": "String"
