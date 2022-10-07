@@ -29,7 +29,7 @@
 					},
 					"datasets": [
 						{
-							"referenceName": "send_email_onailure",
+							"referenceName": "Mock_data",
 							"type": "DatasetReference"
 						}
 					]
