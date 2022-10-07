@@ -325,7 +325,7 @@
 						"Content-Type": "application/json "
 					},
 					"body": {
-						"value": "{\n\"Pipeline\": \"@{pipeline().Pipeline}\",\n\"ErrorMessage\":\"activity('Failure').Error.Message\",\n\"DataFactoryName\":\"@{pipeline().DataFactory}\",\n\"Runid\":\"@{pipeline().GroupId}\"\n}",
+						"value": "{\n\"EmailTo\": \"@{pipeline().parameters.EmailTo}\",\n\"Pipeline\": \"@{pipeline().Pipeline}\",\n\"ErrorMessage\":\"activity('Failure').Error.Message\",\n\"DataFactoryName\":\"@{pipeline().DataFactory}\",\n\"Runid\":\"@{pipeline().GroupId}\"\n}",
 						"type": "Expression"
 					},
 					"datasets": [
@@ -337,6 +337,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"EmailTo": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
